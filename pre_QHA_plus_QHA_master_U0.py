@@ -297,13 +297,13 @@ for fname in glob.glob(template):
                   VOLUME_EACH.append(each_volume)
 
 #       If the *.out are in crystal14, uncomment REAL PART and IMAGINARY PART and comment the others:
-#       if line.startswith(' REAL PART'):
-        if line.startswith(' MODES IN PHASE'):
+#       if line.startswith(' MODES IN PHASE'):
+        if line.startswith(' REAL PART'):
             real_part = True
         elif line.startswith(' NORMAL MODES NORMALIZED TO CLASSICAL AMPLITUDES'):
             real_part = True
-#       elif line.startswith(' IMAGINARY PART'):
-        elif line.startswith(' MODES IN ANTI-PHASE'):
+#       elif line.startswith(' MODES IN ANTI-PHASE'):
+        elif line.startswith(' IMAGINARY PART'):
             real_part = False
         elif line.startswith(' FREQ(') and real_part:
             FREQS = line.split()

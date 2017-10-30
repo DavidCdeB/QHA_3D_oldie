@@ -1,5 +1,4 @@
 #
-
 # QHA -Master- program. David Carrasco de Busturia, 13 October 2017 
 # Please read the documentation and istructions on: https://github.com/DavidCdeB/QHA
 # This program is under the GNU General Public License v3.0. 
@@ -9,7 +8,6 @@
 import sympy as sym
 import numpy as np
 import sys
-import subprocess
 
 
 from mpl_toolkits.mplot3d import Axes3D
@@ -18,8 +16,6 @@ import matplotlib.pyplot as plt
 
 import time
 start = time.time()
-
-
 
 
 ################### CONSTANTS: they are 
@@ -51,7 +47,7 @@ speed_of_light = 2.99792458E+8
 conv_fac_nu =  1E+2 * speed_of_light  
 conv_fac_denu =  1E+2 * speed_of_light * 1E+30 
 
-# We import U0, V0, B0, B0_prime and N_k variables from the pre_QHA script:
+# We import U0, V0, B0 and B0_prime, N_k and n_F_u variables from the pre_QHA script:
 import pre_QHA_plus_QHA_master_U0 
 
 U0 =   pre_QHA_plus_QHA_master_U0.U0
@@ -72,7 +68,7 @@ print 'n_F_u =  ', n_F_u
 
 ##### For each "i" frequency, there is a c_i, d_i and f_i :
 
-Cs, Ds, Fs, mode = np.loadtxt('/home/david/Trabajo/structures/SCRIPT_ON_ALL_THE_PHASES/Calcite_I_over_17_volumes/USING_100_VOLUMES/done_modes_sorted.dat', skiprows = 1).T
+Cs, Ds, Fs, mode = np.loadtxt('/home/david/Trabajo/structures/SCRIPT_ON_ALL_THE_PHASES/Calcite_I_over_17_volumes/done_modes_sorted.dat', skiprows = 1).T
 
 
 #### Here I set the values of "T" and "V" for which I would like
@@ -80,21 +76,10 @@ Cs, Ds, Fs, mode = np.loadtxt('/home/david/Trabajo/structures/SCRIPT_ON_ALL_THE_
 Ts = np.linspace(10.0, 2000.0, 100)
 print Ts
 
-# USING 100 volumes, between the 1st and the last DFT volumes:
-Vs = np.linspace(116.573346,137.200672, 100) 
-
 # The same Vs as we computed on DFT:
-#Vs = np.array([ 116.573346 , 118.139505 , 119.713653 , 121.297131 , 122.894958 , 124.510211, \
-# 124.512598,  125.884132 , 127.054446 , 127.265886 , 128.656314,  130.054927,\
-# 131.463313 , 132.880152 , 134.309582 , 135.750582 , 137.200672])
-
-# 100 Ts  * 100 Vs * 1917 freqs = 19 170 000 points ...
-# If we treat "T" and "V" to be symbolic, 
-# we will be using less points:
-
-# Setting "G" and "T" and "P" to be symbolic:
-#G, T, V = sym.symbols('G T V', real=True)
-
+Vs = np.array([ 116.573346 , 118.139505 , 119.713653 , 121.297131 , 122.894958 , 124.510211, \
+  124.512598,  125.884132 , 127.054446 , 127.265886 , 128.656314,  130.054927,\
+  131.463313 , 132.880152 , 134.309582 , 135.750582 , 137.200672])
 
 ########### Functions:
 
@@ -172,6 +157,7 @@ print ' np.shape(Ps) = ', np.shape(Ps)
 len_Ts = len(Ts)
 len_Vs = len(Vs)
 
+#n_F_u = 2.0
 print 'type(Vs) = ', type(Vs) 
 Vs = Vs / n_F_u
 
@@ -213,10 +199,14 @@ print ' np.shape(Ps) = ', np.shape(Ps)
 output_array = np.vstack((Vs, Ps, Ts, Gs)).T 
 np.savetxt('Vs_Ps_Gs.dat', output_array, header="Vs  Ps  Ts  Gs", fmt="%0.13f")
 
+
 ##### Plotting:
 
 # Load data:
-y_data, z_data, x_data  = np.loadtxt('/home/david/Trabajo/structures/SCRIPT_ON_ALL_THE_PHASES/Calcite_I_over_17_volumes/USING_100_VOLUMES/solid_1__xyz_sorted_as_P_wise.dat').T
+y_data, z_data, x_data  = np.loadtxt('/home/david/Trabajo/structures/SCRIPT_ON_ALL_THE_PHASES/Calcite_I_over_17_volumes/solid_1__xyz_sorted_as_P_wise.dat').T
+
+y_data_2, z_data_2, x_data_2  = np.loadtxt('/home/david/Trabajo/structures/SCRIPT_ON_ALL_THE_PHASES/Calcite_II_correct_description/solid_1__xyz_sorted_as_P_wise.dat').T
+
 
 ####### Calcite I scattered:
 # In a new figure, each surface separately:
@@ -249,10 +239,6 @@ fig.savefig("Calcite_I_scattered_DFT_data_plus_GTP.pdf",  bbox_inches='tight', p
 end = time.time()
 print end-start , "seconds//"
 
-fig.savefig("Calcite_I_100_Volumes_bbox.pdf",  bbox_inches='tight', pad_inches=0.3)#, tight_layout() )#, bbox_inches=bbox)
-fig.savefig("Calcite_I_100_Volumes.pdf") #, tight_layout() )#, bbox_inches=bbox)
-subprocess.check_output('pdfcrop --margins "5 10 0 0" Calcite_I_100_Volumes_bbox.pdf  Calcite_I_100_Volumes_bbox_trimmed.pdf', shell=True)
 plt.show()
-
 #end = time.time()
 
