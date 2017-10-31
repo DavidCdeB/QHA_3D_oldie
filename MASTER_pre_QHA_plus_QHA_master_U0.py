@@ -68,7 +68,7 @@ print 'n_F_u =  ', n_F_u
 
 ##### For each "i" frequency, there is a c_i, d_i and f_i :
 
-Cs, Ds, Fs, mode = np.loadtxt('/home/david/Trabajo/structures/SCRIPT_ON_ALL_THE_PHASES/Calcite_I_over_17_volumes/done_modes_sorted.dat', skiprows = 1).T
+Cs, Ds, Fs, mode = np.loadtxt('./done_modes_sorted.dat', skiprows = 1).T
 
 
 #### Here I set the values of "T" and "V" for which I would like
@@ -203,9 +203,9 @@ np.savetxt('Vs_Ps_Gs.dat', output_array, header="Vs  Ps  Ts  Gs", fmt="%0.13f")
 ##### Plotting:
 
 # Load data:
-y_data, z_data, x_data  = np.loadtxt('/home/david/Trabajo/structures/SCRIPT_ON_ALL_THE_PHASES/Calcite_I_over_17_volumes/solid_1__xyz_sorted_as_P_wise.dat').T
+y_data, z_data, x_data  = np.loadtxt('./solid_1__xyz_sorted_as_P_wise.dat').T
 
-y_data_2, z_data_2, x_data_2  = np.loadtxt('/home/david/Trabajo/structures/SCRIPT_ON_ALL_THE_PHASES/Calcite_II_correct_description/solid_1__xyz_sorted_as_P_wise.dat').T
+y_data_2, z_data_2, x_data_2  = np.loadtxt('./solid_1__xyz_sorted_as_P_wise.dat').T
 
 
 ####### Calcite I scattered:
