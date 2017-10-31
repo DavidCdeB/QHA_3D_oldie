@@ -53,14 +53,14 @@ conv_fac_denu =  1E+2 * speed_of_light * 1E+30
 #N_k = 60
 
 # We import these variables from the pre_QHA script:
-import pre_QHA_plus_QHA_master_U0 
+import pre_QHA_plus_QHA_master_U0_removing_neg_freqs
 
-U0 =   pre_QHA_plus_QHA_master_U0.U0
-V0 =   pre_QHA_plus_QHA_master_U0.V0
-B0 =   pre_QHA_plus_QHA_master_U0.B0
-B0_prime =  pre_QHA_plus_QHA_master_U0.B0_prime
-N_k =  pre_QHA_plus_QHA_master_U0.N_k
-n_F_u = pre_QHA_plus_QHA_master_U0.n_F_u
+U0 =   pre_QHA_plus_QHA_master_U0_removing_neg_freqs.U0
+V0 =   pre_QHA_plus_QHA_master_U0_removing_neg_freqs.V0
+B0 =   pre_QHA_plus_QHA_master_U0_removing_neg_freqs.B0
+B0_prime =  pre_QHA_plus_QHA_master_U0_removing_neg_freqs.B0_prime
+N_k =  pre_QHA_plus_QHA_master_U0_removing_neg_freqs.N_k
+n_F_u = pre_QHA_plus_QHA_master_U0_removing_neg_freqs.n_F_u
 
 print 'U0 =  ', U0
 print 'V0 =  ', V0
@@ -73,7 +73,7 @@ print 'n_F_u =  ', n_F_u
 
 ##### For each "i" frequency, there is a c_i, d_i and f_i :
 
-Cs, Ds, Fs, mode = np.loadtxt('/home/david/Trabajo/structures/SCRIPT_ON_ALL_THE_PHASES/Calcite_II_correct_description_removing_neg_freqs/done_modes_sorted.dat', skiprows = 1).T
+Cs, Ds, Fs, mode = np.loadtxt('./done_modes_sorted.dat', skiprows = 1).T
 
 
 #### Here I set the values of "T" and "V" for which I would like
@@ -260,7 +260,7 @@ np.savetxt('Vs_Ps_Gs.dat', output_array, header="Vs  Ps  Ts  Gs", fmt="%0.13f")
 # Load data:
 #y_data, z_data, x_data  = np.loadtxt('/home/david/Trabajo/structures/SCRIPT_ON_ALL_THE_PHASES/Calcite_I_over_17_volumes/solid_1__xyz_sorted_as_P_wise.dat').T
 
-y_data_2, z_data_2, x_data_2  = np.loadtxt('/home/david/Trabajo/structures/SCRIPT_ON_ALL_THE_PHASES/Calcite_II_correct_description_removing_neg_freqs/solid_1__xyz_sorted_as_P_wise.dat').T
+y_data_2, z_data_2, x_data_2  = np.loadtxt('./solid_1__xyz_sorted_as_P_wise.dat').T
 
 
 ####### Calcite I scattered:
