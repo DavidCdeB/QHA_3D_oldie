@@ -54,7 +54,11 @@ n_T = int(float(n_T))
 # Setting the number of formula units as a raw_input:
 n_F_u = raw_input("""
 
-Please type as an integer the number of formula units in the primitive cell. 
+1) PLEASE NOTE: It is extremely important that you rename the SCELPHONO's outputs to:
+mv *.out *T.out
+If you have not done this, please exit.
+
+2) Please type as an integer the number of formula units in the primitive cell. 
 For example, Calcite I contains 2 formula units in the primitive (rombohedral) cell and 6 formula units in the crystallographic (hexagonal) cell. Thus, the number to be introduced is:   2 <and press ENTER>
 
 """)

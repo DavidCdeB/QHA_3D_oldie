@@ -86,9 +86,16 @@ print Ts
 # The same Vs as we computed on DFT:
 
 # In crystal14.v4:
-Vs =  np.array([ 116.573346,  118.139505,  119.713653,  121.297131,  122.894958,  124.510211, \
- 124.512598, 125.884132, 127.054446, 127.265886, 128.656314, 130.054927,\
- 131.463313, 132.880152, 134.309582, 135.750582, 137.200672])
+#Vs =  np.array([ 116.573346,  118.139505,  119.713653,  121.297131,  122.894958,  124.510211, \
+#124.512598, 125.884132, 127.054446, 127.265886, 128.656314, 130.054927,\
+#131.463313, 132.880152, 134.309582, 135.750582, 137.200672])
+
+# Calcite II true description:
+Vs =  np.array([     220.793750, \
+     223.767645, \
+     226.916324, \
+     230.008313 ])  
+
 
 # In crystal17:
 #Vs = np.array([     116.550895,\
@@ -110,35 +117,21 @@ Vs =  np.array([ 116.573346,  118.139505,  119.713653,  121.297131,  122.894958,
 #    137.187568])  
 
 # Reminder to use the array of volumes you'd like to use:
-print """
-
+double_check = raw_input("""
 Have you chosen correctly the array of volumes you'd like to use for the QHA?...
 Either:
 a) A linspace of 100 volumes between Vmin and Vmax
 b) The same exact volumes used in the simulation
 If you haven't checked this, please, edit the MASTER*py program.
+Type <ok> if you have already done this.
+
+""")
+
+print """
 
 Calculating the Gibbs free energy at the given volumes...
+
 """
-#wait = input("type <ok> to continue.")
-
-#def keep_going():
-#
-#  answer = raw_input("Do you wish to continue? (y/n)")
-#
-#  if (answer == "y"):
-#       print ("You have chosen to continue on")
-#  else:
-#    print "You have chosen to quit this program"
-#    raise SystemExit
-#
-# 100 Ts  * 100 Vs * 1917 freqs = 19 170 000 points ...
-# If we treat "T" and "V" to be symbolic, 
-# we will be using less points:
-
-# Setting "G" and "T" and "P" to be symbolic:
-#G, T, V = sym.symbols('G T V', real=True)
-
 
 ########### Functions:
 
