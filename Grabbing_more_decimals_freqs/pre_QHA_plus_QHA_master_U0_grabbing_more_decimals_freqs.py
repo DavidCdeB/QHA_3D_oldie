@@ -207,10 +207,14 @@ for fname in glob.glob(template):
   f = open(fname, 'r')
   real_part = False
 
-  for line in f:
+  for line in f:  # This scheme is valid for both "INTERPHESS" and normal phonon calculation
+
+        if re.match(r"^ \* ACTIVATED INTERPOLATION OF THE HESSIAN UP TO", line): # For "INTERPHESS"
+                  parameters = line
+                  p = parameters.split()
+                  N_k = p[8]
 
         if re.match(r"^ \* THAT PERMITS THE CALCULATION OF MODES AT", line):
-
                   parameters = line
                   p = parameters.split()
                   N_k = p[8]
