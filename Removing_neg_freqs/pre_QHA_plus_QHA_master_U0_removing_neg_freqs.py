@@ -185,10 +185,13 @@ for fname in glob.glob(template):
         if re.match(r"^  THERMODYNAMICAL PROPERTIES ARE CALCULATED AS A SUM OVER", line):
 
                   parameters = line
-                  p = parameters.split()
-                  factor = p[8]
+#                 p = parameters.split()  # These 2 only work when there is no INTERPHESS: OVER xxx modes
+#                 factor = p[8]           # When there is INTERPHESS, the string is OVERxxx modes, thus, use these:
+                  number = [int(s) for s in parameters if s.isdigit()]
+                  factor = int(''.join(map(str,number)))
 
 factor = int(factor)
+
 
 
 # Extracting the number of k-points ( name of variable = "N_k" ):
@@ -200,15 +203,20 @@ for fname in glob.glob(template):
   f = open(fname, 'r')
   real_part = False
 
-  for line in f:
+  for line in f:  # This scheme is valid for both "INTERPHESS" and normal phonon calculation
+
+        if re.match(r"^ \* ACTIVATED INTERPOLATION OF THE HESSIAN UP TO", line): # For "INTERPHESS"
+                  parameters = line
+                  p = parameters.split()
+                  N_k = p[8]
 
         if re.match(r"^ \* THAT PERMITS THE CALCULATION OF MODES AT", line):
-
                   parameters = line
                   p = parameters.split()
                   N_k = p[8]
 
 N_k = int(N_k)
+
 
 # Extracting each thermodynamic variable:
 Temperatures = []
