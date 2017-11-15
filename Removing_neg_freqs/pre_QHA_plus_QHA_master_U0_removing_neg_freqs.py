@@ -303,32 +303,52 @@ for fname in glob.glob(template):
                
                   VOLUME_EACH.append(each_volume)
 
-#       If the *.out are in crystal14, uncomment REAL PART and IMAGINARY PART and comment the others:
-#       if line.startswith(' REAL PART'):
-        if line.startswith(' MODES IN PHASE'):
-            real_part = True
-        elif line.startswith(' NORMAL MODES NORMALIZED TO CLASSICAL AMPLITUDES'):
-            real_part = True
-#       elif line.startswith(' IMAGINARY PART'):
-        elif line.startswith(' MODES IN ANTI-PHASE'):
-            real_part = False
-        elif line.startswith(' FREQ(') and real_part:
-            FREQS = line.split()
-            del FREQS[0]
-            yield FREQS
+        if 'MODES         EIGV          FREQUENCIES     IRREP' in line:
 
-  FREQ = read_real_parts(fname) # gives you the generator
-  All_frequencies = list(itertools.chain.from_iterable(FREQ))
+            print line
+            print f.next()
 
-  ALL_FREQ.extend(All_frequencies)
+            while True:
+               target = f.next()
+               aux = target.split()
+               if not aux:
+                  break
 
-thing = '0.00'
-while thing in ALL_FREQ: ALL_FREQ.remove(thing)
+               first_No = aux[0]
+               second_No = aux[1]
+               freq = aux[3]
+               print 'freq = ', freq
+               print ' first_No original = ', first_No
 
-print 'len(TOTAL) = ', len(TOTAL)
+               first_No = first_No.translate(None, '-')  # remove the '-'
+
+               print ' first_No = ', first_No
+               print 'second_No = ', second_No
+
+               factor_freq = abs(int(second_No) - int(first_No)) + 1
+               print 'factor_freq = ', factor_freq
+
+               freqs = [freq] * factor_freq
+               print 'freqs = ', freqs
+
+               ALL_FREQ.append(freqs)
+
+
+print 'ALL_FREQ = ', ALL_FREQ
+ALL_FREQ = [item for sublist in ALL_FREQ for item in sublist]
+print 'ALL_FREQ = ', ALL_FREQ
 print 'len(ALL_FREQ) = ', len(ALL_FREQ)
-print 'len(MODE_NUMBER) = ', len(MODE_NUMBER)
-#sys.exit()
+
+thing = '0.0000'
+while thing in ALL_FREQ: ALL_FREQ.remove(thing)
+print 'ALL_FREQ = ', ALL_FREQ
+print 'len(ALL_FREQ) = ', len(ALL_FREQ)
+
+
+print ' len(TOTAL) = ', len(TOTAL)
+print ' len(ALL_FREQ) = ', len(ALL_FREQ)
+print ' len(MODE_NUMBER) = ', len(MODE_NUMBER)
+
 
 output_array_2 = np.vstack((TOTAL, ALL_FREQ, MODE_NUMBER)).T
 np.savetxt('Volume_for_freqs_isolation_3_true_problem.dat', output_array_2, header="VOLUME (A^3/CELL) \t FREQS (CM^-1) \t mode number:", fmt="%s")
