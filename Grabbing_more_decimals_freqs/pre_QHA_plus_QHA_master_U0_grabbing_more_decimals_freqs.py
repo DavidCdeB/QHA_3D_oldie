@@ -190,8 +190,10 @@ for fname in glob.glob(template):
         if re.match(r"^  THERMODYNAMICAL PROPERTIES ARE CALCULATED AS A SUM OVER", line):
 
                   parameters = line
-                  p = parameters.split()
-                  factor = p[8]
+#                 p = parameters.split()  # These 2 only work when there is no INTERPHESS: OVER xxx modes
+#                 factor = p[8]           # When there is INTERPHESS, the string is OVERxxx modes, thus, use these:
+                  number = [int(s) for s in parameters if s.isdigit()]
+                  factor = int(''.join(map(str,number)))
 
 factor = int(factor)
 
