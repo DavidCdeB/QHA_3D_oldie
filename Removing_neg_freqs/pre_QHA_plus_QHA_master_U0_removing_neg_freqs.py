@@ -1,5 +1,6 @@
 # 
-# QHA program. David Carrasco de Busturia, 18 June 2017 
+# QHA -son- program: This program is going to be called by the QHA -Master- program
+# David Carrasco de Busturia, 13 October 2017 
 # Please read the documentation and istructions on: https://github.com/DavidCdeB/QHA
 # This program is under the GNU General Public License v3.0. 
 # davidcarrascobustur@gmail.com
@@ -53,7 +54,11 @@ n_T = int(float(n_T))
 # Setting the number of formula units as a raw_input:
 n_F_u = raw_input("""
 
-Please type as an integer the number of formula units in the primitive cell. 
+1) PLEASE NOTE: It is extremely important that you rename the SCELPHONO's outputs to:
+mv *.out *T.out
+If you have not done this, please exit.
+
+2) Please type as an integer the number of formula units in the primitive cell. 
 For example, Calcite I contains 2 formula units in the primitive (rombohedral) cell and 6 formula units in the crystallographic (hexagonal) cell. Thus, the number to be introduced is:   2 <and press ENTER>
 
 """)
@@ -193,7 +198,6 @@ for fname in glob.glob(template):
 factor = int(factor)
 
 
-
 # Extracting the number of k-points ( name of variable = "N_k" ):
 path='./'
 template = os.path.join(path, '*T.out')
@@ -235,10 +239,10 @@ MODE_NUMBER = []
 for fname in glob.glob(template):
   print fname
   f = open(fname, 'r')
-  real_part = False
+# real_part = False
 
-  def read_real_parts(fname):
-    for line in f:
+# def read_real_parts(fname):
+  for line in f:
 
         if re.match(r"^ ET            :", line):
          start = line.find(':') + 8
@@ -305,7 +309,7 @@ for fname in glob.glob(template):
 
         if 'MODES         EIGV          FREQUENCIES     IRREP' in line:
 
-            print line
+#           print line
             print f.next()
 
             while True:
@@ -317,19 +321,19 @@ for fname in glob.glob(template):
                first_No = aux[0]
                second_No = aux[1]
                freq = aux[3]
-               print 'freq = ', freq
-               print ' first_No original = ', first_No
+#              print 'freq = ', freq
+#              print ' first_No original = ', first_No
 
                first_No = first_No.translate(None, '-')  # remove the '-'
 
-               print ' first_No = ', first_No
-               print 'second_No = ', second_No
+#              print ' first_No = ', first_No
+#              print 'second_No = ', second_No
 
                factor_freq = abs(int(second_No) - int(first_No)) + 1
-               print 'factor_freq = ', factor_freq
+#              print 'factor_freq = ', factor_freq
 
                freqs = [freq] * factor_freq
-               print 'freqs = ', freqs
+#              print 'freqs = ', freqs
 
                ALL_FREQ.append(freqs)
 
